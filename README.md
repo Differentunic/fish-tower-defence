@@ -1,6 +1,6 @@
 # fish-tower-defence
 
-## - Potential p5 libs
+## Potential p5 libs
 
 - https://github.com/Lartu/p5.clickable
 - https://github.com/bitcraftlab/p5.gui
