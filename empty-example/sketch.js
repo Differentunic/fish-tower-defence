@@ -34,8 +34,8 @@ function draw() {
 
 function mouseClicked() {
   if (mouseX < 9 * someconstant && mouseY < 5 * someconstant) {
-    let x = floor(mouseX /100)
-    let y =  floor(mouseY/100)
+    let x = floor(mouseX/someconstant)
+    let y =  floor(mouseY/someconstant)
     
     if (!([x, y] in towers)) {
       towers[[x, y]] = new tower(x, y)
@@ -45,9 +45,7 @@ function mouseClicked() {
   for (f in towers) {
     towers[f].draw()
   }
-} 
-
-
+}
 
 class tower {
   constructor(x, y) {
