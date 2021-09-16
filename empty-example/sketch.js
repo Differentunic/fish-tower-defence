@@ -7,7 +7,7 @@ let someconstant
 let selectedbuytower = false
 let selected = false
 
-let money = 1000
+let money = 100000
 
 
 //the tileimages will be loaded into these
@@ -78,6 +78,9 @@ function draw() {
   image(backgroundgraphics, 0, 0)
   image(towergraphics, 0, 0)
   image(towerbuygraphics, windowWidth-rightspace, 0)
+  fill(0)
+  textSize(32)
+  text(`$${money}`, windowWidth-120-textWidth(money), 0, 32, 32)
 
   noFill()
   stroke(100)
@@ -123,6 +126,9 @@ function mouseClicked() {
   if (selected !== false && !(mouseX > 0 && mouseX < 200 && mouseY > 40 && mouseY < 340)) {
     selected = false
   }
+  if (selected !== false) {
+    towers[selected].upgrademouseClick()
+  }
 
   if (x < tilemapwidth && y < tilemapheight) {
     if (backgroundlayout[y][x] == "e") {
@@ -167,7 +173,7 @@ class tower {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.range = {level: 4, max:5, prices: [200, 300, 400, 500]};
+    this.range = {level: 1, max:5, prices: [200, 300, 400, 500]};
     this.firerate = {level: 1, max:5, prices: [200, 300, 400, 500]};
     this.penetration = {level: 1, max:5, prices: [200, 300, 400, 500]};
   }
@@ -203,15 +209,28 @@ class tower {
   }
   upgrademouseClick() {
     if (mouseX > 20 && mouseX < 20+160 && mouseY > 72 && mouseY < 72+64) {
-      if (this.range.level == this.range.max) {
-        this.range.level += 1
-
+      if (this.range.level <= this.range.max+1) {
+        if (money >= this.range.prices[this.range.level-1]) {
+          money -= this.range.prices[this.range.level-1]
+          this.range.level += 1
+        }    
       }
     } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 160 && mouseY < 160+64) {
-      rect(20, 160, 160, 64)
+      if (this.firerate.level <= this.firerate.max+1) {
+        if (money >= this.firerate.prices[this.firerate.level-1]) {
+          money -= this.firerate.prices[this.firerate.level-1]
+          this.firerate.level += 1
+        }    
+      }
     } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
-      rect(20, 246, 160, 64)
+      if (this.penetration.level <= this.penetration.max+1) {
+        if (money >= this.penetration.prices[this.penetration.level-1]) {
+          money -= this.penetration.prices[this.penetration.level-1]
+          this.penetration.level += 1
+        }    
+      }
     }
+    console.log(this)
   }
 }
 
