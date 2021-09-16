@@ -203,7 +203,7 @@ class tower {
       rect(20, 72, 160, 64)
     } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 160 && mouseY < 160+64) {
       rect(20, 160, 160, 64)
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
+    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 246 && mouseY < 246+64) {
       rect(20, 246, 160, 64)
     }
   }
@@ -222,7 +222,7 @@ class tower {
           this.firerate.level += 1
         }    
       }
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
+    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 246 && mouseY < 246+64) {
       if (this.penetration.level <= this.penetration.max+1) {
         if (money >= this.penetration.prices[this.penetration.level-1]) {
           money -= this.penetration.prices[this.penetration.level-1]
