@@ -9,6 +9,7 @@ let selected = false
 
 let money = 1000
 
+
 //the tileimages will be loaded into these
 let empty, lr, tb, lt, lb, rt, rb 
 let backgroundlayout = [
@@ -172,11 +173,9 @@ class tower {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-
     this.range = {level: 4, max:5, prices: [200, 300, 400, 500]};
     this.firerate = {level: 1, max:5, prices: [200, 300, 400, 500]};
     this.penetration = {level: 1, max:5, prices: [200, 300, 400, 500]};
-
   }
   draw() {
     towergraphics.fill(100, 23, 43)
@@ -220,10 +219,7 @@ class tower {
     } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
       rect(20, 246, 160, 64)
     }
-
   }
-  
-
 }
 
 class tower1 {
