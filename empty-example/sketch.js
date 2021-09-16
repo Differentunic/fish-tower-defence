@@ -10,6 +10,7 @@ let selected = false
 let money = 100000
 
 
+
 //the tileimages will be loaded into these
 let empty, lr, tb, lt, lb, rt, rb 
 let backgroundlayout = [
@@ -171,16 +172,16 @@ function drawselectbuytower() {
 
 function fnselectbuytower() {
   let x = mouseX - windowWidth + rightspace
-    // console.log(x)
-    if (x > 10 && x < towerbuygraphics.width-20) {
-      if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
-        selectedbuytower = 0
-      } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
-        selectedbuytower = 1
-      } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
-        selectedbuytower = 2
-      }
+  // console.log(x)
+  if (x > 10 && x < towerbuygraphics.width-20) {
+    if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
+      selectedbuytower = 0
+    } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
+      selectedbuytower = 1
+    } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
+      selectedbuytower = 2
     }
+  }
 }
 
 function drawBackground() {
