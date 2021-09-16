@@ -110,9 +110,11 @@ function draw() {
   stroke(100)
 
 
+
   if (selected !== false) {
     towers[selected].upgradedraw()
   }
+
 }
 
 
@@ -120,11 +122,13 @@ function mouseClicked() {
   let x = floor(mouseX / someconstant)
   let y = floor(mouseY / someconstant)
   
+
   if (selected !== false && !(mouseX > 0 && mouseX < 200 && mouseY > 40 && mouseY < 340)) {
     selected = false
   }
 
   if (x < tilemapwidth && y < tilemapheight) {
+
     if (backgroundlayout[y][x] == "e") {
       if (!([x, y] in towers)) {
         if (selectedbuytower !== false) {
@@ -145,7 +149,9 @@ function mouseClicked() {
         selected = [x, y]
       }
     }
+
     selectedbuytower = false
+
   } else {
     let x = mouseX - windowWidth + rightspace
     // console.log(x)
@@ -175,6 +181,7 @@ class tower {
     towergraphics.fill(100, 23, 43)
     towergraphics.rect(this.x * someconstant, this.y * someconstant, someconstant, someconstant)
   }
+
   upgradedraw() {
     fill(255)
     rect(0, 40, 200, 300)
