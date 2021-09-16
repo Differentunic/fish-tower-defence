@@ -212,9 +212,7 @@ class tower {
     } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
       rect(20, 246, 160, 64)
     }
-
   }
-  
 }
 
 class tower1 {
