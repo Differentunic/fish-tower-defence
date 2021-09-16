@@ -7,7 +7,8 @@ let someconstant
 let selectedbuytower = false
 let selected = false
 
-let money = 1000
+let money = 100000
+
 
 
 //the tileimages will be loaded into these
@@ -72,12 +73,14 @@ function windowResized() {
 }
 
 function draw() {
-
   background(0)
 
   image(backgroundgraphics, 0, 0)
   image(towergraphics, 0, 0)
   image(towerbuygraphics, windowWidth-rightspace, 0)
+  fill(0)
+  textSize(32)
+  text(`$${money}`, windowWidth-120-textWidth(money), 0, 32, 32)
 
   noFill()
   stroke(100)
@@ -86,20 +89,7 @@ function draw() {
     rect ((floor(mouseX / someconstant) * someconstant),
     (floor(mouseY / someconstant) * someconstant), someconstant, someconstant)
   } else {
-    let x = mouseX - windowWidth + rightspace
-    // console.log(x)
-    if (x > 10 && x < towerbuygraphics.width-20) {
-      if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
-        fill(25, 25, 25, 100)
-        rect(windowWidth-rightspace + 10, 40, towerbuygraphics.width-20, 80)
-      } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
-        fill(25, 25, 25, 100)
-        rect(windowWidth-rightspace + 10, 40+towerbuygraphics.width, towerbuygraphics.width-20, 80)
-      } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
-        fill(25, 25, 25, 100)
-        rect(windowWidth-rightspace + 10, 40+towerbuygraphics.width*2, towerbuygraphics.width-20, 80)
-      }
-    }
+    drawselectbuytower()
   }
 
   if (selectedbuytower !== false) {
@@ -125,6 +115,9 @@ function mouseClicked() {
 
   if (selected !== false && !(mouseX > 0 && mouseX < 200 && mouseY > 40 && mouseY < 340)) {
     selected = false
+  }
+  if (selected !== false) {
+    towers[selected].upgrademouseClick()
   }
 
   if (x < tilemapwidth && y < tilemapheight) {
@@ -153,92 +146,41 @@ function mouseClicked() {
     selectedbuytower = false
 
   } else {
-    let x = mouseX - windowWidth + rightspace
-    // console.log(x)
-    if (x > 10 && x < towerbuygraphics.width-20) {
-      if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
-        selectedbuytower = 0
-      } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
-        selectedbuytower = 1
-      } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
-        selectedbuytower = 2
-      }
-    }
+    fnselectbuytower()
   }
-
   drawTowers()
 }
 
-class tower {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.range = {level: 4, max:5, prices: [200, 300, 400, 500]};
-    this.firerate = {level: 1, max:5, prices: [200, 300, 400, 500]};
-    this.penetration = {level: 1, max:5, prices: [200, 300, 400, 500]};
-  }
-  draw() {
-    towergraphics.fill(100, 23, 43)
-    towergraphics.rect(this.x * someconstant, this.y * someconstant, someconstant, someconstant)
-  }
 
-  upgradedraw() {
-    fill(255)
-    rect(0, 40, 200, 300)
-    fill(0)
-    textSize(32)
-    text("spear", 0, 40, 200, 32)
-    fill(255)
-    rect(20, 72, 160, 64)
-    rect(20, 160, 160, 64)
-    rect(20, 246, 160, 64)
-    fill(0)
 
-    textSize(16)
-    text(`range, lvl ${this.range.level}, ${(this.range.level !== this.range.max) ? `upgrade ($${this.range.prices[this.range.level-1]})` : `max` }`, 20, 72, 160, 64)
-    text(`firerate, lvl ${this.firerate.level}, ${(this.firerate.level !== this.firerate.max) ? `upgrade ($${this.firerate.prices[this.firerate.level-1]})` : `max` }`, 20, 160, 160, 64)
-    text(`damage, lvl ${this.penetration.level}, ${(this.penetration.level !== this.range.max) ? `upgrade ($${this.penetration.prices[this.penetration.level-1]})` : `max` }`, 20, 246, 160, 64)
-    
-    fill(0, 0, 0, 20)
-    if (mouseX > 20 && mouseX < 20+160 && mouseY > 72 && mouseY < 72+64) {
-      rect(20, 72, 160, 64)
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 160 && mouseY < 160+64) {
-      rect(20, 160, 160, 64)
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
-      rect(20, 246, 160, 64)
-    }
-  }
-  upgrademouseClick() {
-    if (mouseX > 20 && mouseX < 20+160 && mouseY > 72 && mouseY < 72+64) {
-      if (this.range.level == this.range.max) {
-        this.range.level += 1
-
-      }
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 160 && mouseY < 160+64) {
-      rect(20, 160, 160, 64)
-    } else if (mouseX > 20 && mouseX < 20+160 && mouseY > 146 && mouseY < 246+64) {
-      rect(20, 246, 160, 64)
+function drawselectbuytower() {
+  let x = mouseX - windowWidth + rightspace
+  // console.log(x)
+  if (x > 10 && x < towerbuygraphics.width-20) {
+    if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
+      fill(25, 25, 25, 100)
+      rect(windowWidth-rightspace + 10, 40, towerbuygraphics.width-20, 80)
+    } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
+      fill(25, 25, 25, 100)
+      rect(windowWidth-rightspace + 10, 40+towerbuygraphics.width, towerbuygraphics.width-20, 80)
+    } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
+      fill(25, 25, 25, 100)
+      rect(windowWidth-rightspace + 10, 40+towerbuygraphics.width*2, towerbuygraphics.width-20, 80)
     }
   }
 }
 
-class tower1 {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  draw() {
-    towergraphics.fill(23, 100, 43)
-    towergraphics.rect(this.x * someconstant, this.y * someconstant, someconstant, someconstant)
-  }
-}
-
-
-
-function drawTowers() {
-  towergraphics.clear()
-  for (f in towers) {
-    towers[f].draw()
+function fnselectbuytower() {
+  let x = mouseX - windowWidth + rightspace
+  // console.log(x)
+  if (x > 10 && x < towerbuygraphics.width-20) {
+    if (mouseY > 40 && mouseY < 40+towerbuygraphics.width-20) {
+      selectedbuytower = 0
+    } else if (mouseY > 40+towerbuygraphics.width && mouseY < 40+towerbuygraphics.width*2-20) {
+      selectedbuytower = 1
+    } else if (mouseY > 40+towerbuygraphics.width*2 && mouseY < 40+towerbuygraphics.width*3-20) {
+      selectedbuytower = 2
+    }
   }
 }
 
