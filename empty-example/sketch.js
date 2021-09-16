@@ -9,7 +9,6 @@ let selected = false
 
 let money = 1000
 
-
 //the tileimages will be loaded into these
 let empty, lr, tb, lt, lb, rt, rb 
 let backgroundlayout = [
@@ -110,9 +109,11 @@ function draw() {
   stroke(100)
 
 
+
   if (selected !== false) {
     towers[selected].upgradedraw()
   }
+
 }
 
 
@@ -120,11 +121,13 @@ function mouseClicked() {
   let x = floor(mouseX / someconstant)
   let y = floor(mouseY / someconstant)
   
+
   if (selected !== false && !(mouseX > 0 && mouseX < 200 && mouseY > 40 && mouseY < 340)) {
     selected = false
   }
 
   if (x < tilemapwidth && y < tilemapheight) {
+
     if (backgroundlayout[y][x] == "e") {
       if (!([x, y] in towers)) {
         if (selectedbuytower !== false) {
@@ -145,7 +148,9 @@ function mouseClicked() {
         selected = [x, y]
       }
     }
+
     selectedbuytower = false
+
   } else {
     let x = mouseX - windowWidth + rightspace
     // console.log(x)
@@ -167,14 +172,17 @@ class tower {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+
     this.range = {level: 4, max:5, prices: [200, 300, 400, 500]};
     this.firerate = {level: 1, max:5, prices: [200, 300, 400, 500]};
     this.penetration = {level: 1, max:5, prices: [200, 300, 400, 500]};
+
   }
   draw() {
     towergraphics.fill(100, 23, 43)
     towergraphics.rect(this.x * someconstant, this.y * someconstant, someconstant, someconstant)
   }
+
   upgradedraw() {
     fill(255)
     rect(0, 40, 200, 300)
@@ -215,6 +223,7 @@ class tower {
 
   }
   
+
 }
 
 class tower1 {
